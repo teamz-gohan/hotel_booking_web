@@ -45,7 +45,7 @@ const SignIn = () => {
         <input
           type="email"
           className="border rounded w-full py-1 px-2 font-normal"
-          {...register("email", { required: "This field is requied!" })}
+          {...register("email", { required: "This field is required!" })}
         />
         {errors.email && (
           <span className="text-red-500">{errors.email.message}</span>
@@ -57,7 +57,7 @@ const SignIn = () => {
           type="password"
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("password", {
-            required: "This field is requied!",
+            required: "This field is required!",
             minLength: {
               value: 6,
               message: "Password must be at least 6 characters!",
