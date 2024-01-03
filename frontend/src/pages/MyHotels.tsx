@@ -6,7 +6,7 @@ import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
 
 const MyHotels = () => {
   const { data: hotelData } = useQuery("fetchMyHotels", apiClient.fetchHotels, {
-    onError: (error) => {},
+    onError: () => {},
   });
 
   if (!hotelData) {
@@ -53,7 +53,8 @@ const MyHotels = () => {
               </div>
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                 <BiStar className="mr-2" />
-                {hotel.starRating} {(hotel.starRating > 1 && "stars rating") || "star rating" }
+                {hotel.starRating}{" "}
+                {(hotel.starRating > 1 && "stars rating") || "star rating"}
               </div>
             </div>
             <span className="flex justify-end">
