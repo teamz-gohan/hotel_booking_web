@@ -5,7 +5,7 @@ import { BsBuilding, BsMap } from "react-icons/bs";
 import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
 
 const MyHotels = () => {
-  const { data: hotelData } = useQuery("fetchMyHotels", apiClient.fetchHotels, {
+  const { data: hotelData } = useQuery("fetchMyHotels", apiClient.fetchMyHotels, {
     onError: () => {},
   });
 

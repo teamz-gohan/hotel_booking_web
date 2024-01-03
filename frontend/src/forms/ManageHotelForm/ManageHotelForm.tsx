@@ -4,6 +4,8 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import { HotelType } from "../../../../backend/src/shared/types";
+import { useEffect } from "react";
 
 export type HotelFormData = {
   name: string;
@@ -15,6 +17,7 @@ export type HotelFormData = {
   starRating: number;
   facilities: string[];
   imageFiles: FileList;
+  imageUrls: string[];
   adultCount: number;
   childCount: number;
 };
@@ -22,16 +25,22 @@ export type HotelFormData = {
 type Props = {
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
+  hotel?: HotelType;
 };
 
-const ManageHotelForm = ({ onSave, isLoading }: Props) => {
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
+
+  useEffect(() => {
+    reset(hotel); // Reset lại giá trị của các field trong form
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson) => {
     const formData = new FormData();
 
     // Thêm các trường dữ liệu vào FormData
+    hotel && formData.append("hotelId", hotel._id); // Edit mode
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -49,6 +58,13 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
     Array.from(formDataJson.imageFiles).forEach((image) => {
       formData.append(`imageFiles`, image);
     });
+
+    // Xử lý khi người dùng xóa ảnh có sẵn khi cập nhật
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((imageUrl, index) => {
+        formData.append(`imageUrls[${index}]`, imageUrl)
+      })
+    }
 
     onSave(formData);
   });
