@@ -15,3 +15,13 @@ export type HotelType = {
   imageUrls: string[];
   lastUpdated: Date;
 };
+
+// Kiểu dữ liệu trả về khi search tìm khách sạn
+export type HotelSearchResponse = {
+  data: HotelType[];
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+  };
+};

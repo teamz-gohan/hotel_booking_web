@@ -5,9 +5,13 @@ import { BsBuilding, BsMap } from "react-icons/bs";
 import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
 
 const MyHotels = () => {
-  const { data: hotelData } = useQuery("fetchMyHotels", apiClient.fetchMyHotels, {
-    onError: () => {},
-  });
+  const { data: hotelData } = useQuery(
+    "fetchMyHotels",
+    apiClient.fetchMyHotels,
+    {
+      onError: () => {},
+    }
+  );
 
   if (!hotelData) {
     return <span>No Hotels Found</span>;
@@ -46,10 +50,12 @@ const MyHotels = () => {
               </div>
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                 <BiHotel className="mr-2" />
-                {hotel.adultCount}{" "}
-                {(hotel.adultCount > 1 && "adults") || "adult"},{" "}
-                {hotel.childCount}{" "}
-                {(hotel.childCount > 1 && "children") || "child"}
+                {`${hotel.adultCount} ${
+                  hotel.adultCount > 1 ? "adults" : "adult"
+                }, `}
+                {`${hotel.childCount} ${
+                  hotel.childCount > 1 ? "children" : "child"
+                }`}
               </div>
               <div className="border border-slate-300 rounded-sm p-3 flex items-center">
                 <BiStar className="mr-2" />
