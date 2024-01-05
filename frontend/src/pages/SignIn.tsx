@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../contexts/AppContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Định nghĩa kiểu dữ liệu cho Sign In form
 export type SignInFormData = {
@@ -14,6 +14,7 @@ const SignIn = () => {
   const queryClient = useQueryClient();
   const { showToast } = useAppContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -25,8 +26,8 @@ const SignIn = () => {
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
       showToast({ message: "Signed in successfully!", type: "SUCCESS" });
-      await queryClient.invalidateQueries("validateToken")
-      navigate("/");
+      await queryClient.invalidateQueries("validateToken");
+      navigate(location.state?.from?.pathname || "/");
     },
     onError: (error: Error) => {
       showToast({ message: error.message, type: "ERROR" });
@@ -70,7 +71,10 @@ const SignIn = () => {
       </label>
       <span className="flex items-center justify-between">
         <span className="tex-sm">
-          Not Registered? <Link className="underline" to="/register">Create an account here</Link>
+          Not Registered?{" "}
+          <Link className="underline" to="/register">
+            Create an account here
+          </Link>
         </span>
         <button
           type="submit"

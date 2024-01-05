@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import Hotel from "../models/hotel";
 import { HotelSearchResponse } from "../shared/types";
+import { param, validationResult } from "express-validator";
 
 const router = express.Router();
 
@@ -57,6 +58,30 @@ router.get("/search", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 });
+
+// Api để xem chi tiết thông tin khách sạn
+router.get(
+  "/:id",
+  [param("id").notEmpty().withMessage("Hotel ID is required!")],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req); // Validation có lỗi hay không
+    if (!errors.isEmpty) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // ID khách sạn từ request của người dùng
+    const id = req.params.id.toString();
+
+    try {
+      // Tìm thông tin khách sạn trong db theo id và trả về cho người dùng
+      const hotel = await Hotel.findById(id);
+      res.json(hotel);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Error fetching hotel" });
+    }
+  }
+);
 
 // Hàm tạo câu truy vấn dữ liệu database
 const constructSearchQuery = (queryParams: any) => {
