@@ -41,22 +41,23 @@ const SignIn = () => {
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font-bold">Sign In</h2>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
         Email
         <input
           type="email"
-          className="border rounded w-full py-1 px-2 font-normal"
+          className="border rounded w-full p-2 font-normal placeholder:italic"
+          placeholder="example@gmail.com"
           {...register("email", { required: "This field is required!" })}
         />
         {errors.email && (
           <span className="text-red-500">{errors.email.message}</span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
         Password
         <input
           type="password"
-          className="border rounded w-full py-1 px-2 font-normal"
+          className="border rounded w-full p-2 font-normal placeholder:italic"
           {...register("password", {
             required: "This field is required!",
             minLength: {
@@ -78,7 +79,7 @@ const SignIn = () => {
         </span>
         <button
           type="submit"
-          className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
+          className="flex bg-blue-600 justify-self-end items-center rounded-full px-6 py-2 text-white font-bold hover:opacity-80 transition-all duration-200"
         >
           Login
         </button>

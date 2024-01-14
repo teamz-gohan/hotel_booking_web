@@ -8,15 +8,21 @@ type Props = {
 
 const SearchResultsCard = ({ hotel }: Props) => {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-300 rounded-lg p-8 gap-8">
+    <div className="grid grid-cols-1 xl:grid-cols-[2fr_3fr] border border-slate-100 rounded-[25px] shadow-[0_0_60px_-25px_rgba(0,0,0,0.4)] p-6 gap-8">
       <div className="w-full h-[300px]">
         <img
           src={hotel.imageUrls[0]}
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center rounded-[25px]"
         />
       </div>
       <div className="grid grid-rows-[1fr_2fr_1fr]">
         <div>
+          <Link
+            to={`/details/${hotel._id}`}
+            className="text-2xl font-bold cursor-pointer"
+          >
+            {hotel.name}
+          </Link>
           <div className="flex items-center">
             <span className="flex">
               {Array.from({ length: hotel.starRating }).map((...args) => (
@@ -25,13 +31,7 @@ const SearchResultsCard = ({ hotel }: Props) => {
             </span>
             <span className="ml-1 text-sm">{hotel.type}</span>
           </div>
-          <Link
-            to={`/details/${hotel._id}`}
-            className="text-2xl font-bold cursor-pointer"
-          >
-            {hotel.name}
-          </Link>
-        </div>
+        </div> 
         <div>
           <div className="line-clamp-4">{hotel.description}</div>
         </div>
@@ -54,7 +54,7 @@ const SearchResultsCard = ({ hotel }: Props) => {
             <span className="font-bold">${hotel.pricePerNight} per night</span>
             <Link
               to={`/detail/${hotel._id}`}
-              className="bg-blue-600 text-white h-full p-2 font-bold text-xl max-w-fit hover:bg-blue-500"
+              className="flex bg-blue-600 items-center rounded-full px-6 py-2 text-white font-bold hover:opacity-80 transition-all duration-200"
             >
               View More
             </Link>

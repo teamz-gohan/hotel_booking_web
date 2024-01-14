@@ -1,3 +1,12 @@
+// Kiểu dữ liệu User
+export type UserType = {
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
 // Kiểu dữ liệu Hotel
 export type HotelType = {
   _id: string;
@@ -14,6 +23,7 @@ export type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+  bookings: BookingType[];
 };
 
 // Kiểu dữ liệu trả về khi search tìm khách sạn
@@ -25,3 +35,17 @@ export type HotelSearchResponse = {
     pages: number;
   };
 };
+
+// Kiểu dữ liệu để tạo một booking
+export type BookingType = {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  adultCount: number;
+  childCount: number;
+  checkIn: Date;
+  checkOut: Date;
+  totalCost: number;
+}

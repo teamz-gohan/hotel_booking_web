@@ -99,26 +99,52 @@ const Search = () => {
         </div>
       </div>
       <div className="flex flex-col gap-5">
-        <div className="flex justify-between items-center">
-          <span className="text-xl font-bold">
+        <div className="flex justify-between items-start">
+          {/* <span className="text-xl font-bold">
             {`${hotelData?.pagination.total} ${
               (hotelData?.pagination.total || 1) > 1 ? "Hotels" : "Hotel"
             } found ${search.destination && "in " + search.destination}`}
-          </span>
-          <select
-            value={sortOption}
-            onChange={(event) => setSortOption(event.target.value)}
-            className="p-2 border rounded-md"
-          >
-            <option value="" disabled>Sort By</option>
-            <option value="starRating">Star Rating</option>
-            <option value="pricePerNightAsc">
-              Price Per Night (low to high)
-            </option>
-            <option value="pricePerNightDesc">
-              Price Per Night (high to low)
-            </option>
-          </select>
+          </span> */}
+          <div className="flex flex-col gap-2">
+            <p>{`${hotelData?.pagination.total} search ${
+              (hotelData?.pagination.total || 1) > 1 ? "results" : "result"
+            } for`}</p>
+            <h1 className="text-black text-2xl font-bold">{`${
+              (search.destination && `${search.destination}, `) || ""
+            } ${search.checkIn.toLocaleString("en-US", {
+              month: "short",
+              day: "numeric",
+            })}${
+              search.checkOut.getDay() - search.checkIn.getDay() >= 1
+                ? ` - ${search.checkOut.toLocaleString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}`
+                : ""
+            }, ${
+              search.adultCount + search.childCount > 1
+                ? `${search.adultCount + search.childCount} guests`
+                : `${search.adultCount + search.childCount} guest`
+            }`}</h1>
+          </div>
+          <div className="px-4 py-2 border rounded-full">
+            <select
+              value={sortOption}
+              onChange={(event) => setSortOption(event.target.value)}
+              className="focus:outline-none"
+            >
+              <option value="" disabled>
+                Sort By
+              </option>
+              <option value="starRating">Star Rating</option>
+              <option value="pricePerNightAsc">
+                Price Per Night (low to high)
+              </option>
+              <option value="pricePerNightDesc">
+                Price Per Night (high to low)
+              </option>
+            </select>
+          </div>
         </div>
         {hotelData?.data.map((hotel, index) => (
           <SearchResultsCard key={index} hotel={hotel} />

@@ -1,8 +1,26 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import { HotelSearchResponse, HotelType } from "../../backend/src/shared/types";
+import {
+  HotelSearchResponse,
+  HotelType,
+  UserType,
+} from "../../backend/src/shared/types";
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
+// Api lấy thông tin người dùng hiện tại
+export const fetchCurrentUser = async (): Promise<UserType> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching user");
+  }
+
+  return response.json();
+};
 
 // Được gọi khi thực hiện register
 export const register = async (formData: RegisterFormData) => {
@@ -176,11 +194,50 @@ export const searchHotels = async (
   return response.json();
 };
 
+// Lấy danh sách khách sạn vừa được thêm
+export const fetchHotels = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/hotels`);
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+  return response.json();
+};
+
 // Api lấy thông tin chi tiết của khách sạn bằng Id
-export const fetchHotelById = async (hotelId: string): Promise<HotelType>=> {
+export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
   const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`);
   if (!response.ok) {
     throw new Error("Error fetching hotel");
   }
+  return response.json();
+};
+
+// Api dùng để đặt phòng
+export const createRoomBooking = async (formData: BookingFormData) => {
+  console.log(formData)
+  const response = await fetch(`${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error booking room");
+  }
+};
+
+// Api lấy danh sách phòng đã đặt
+export const fetchMyBookings = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/my-bookings`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to fetch bookings");
+  }
+
   return response.json();
 };

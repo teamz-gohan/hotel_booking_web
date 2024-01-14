@@ -45,22 +45,24 @@ const Register = () => {
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font-bold">Create an Account</h2>
       <div className="flex flex-col md:flex-row gap-5">
-        <label className="text-gray-700 text-sm font-bold flex-1">
+        <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
           First Name
           <input
             type="text"
-            className="border rounded w-full py-1 px-2 font-normal"
+            className="border rounded w-full p-2 font-normal placeholder:italic"
+            placeholder="Mike"
             {...register("firstName", { required: "This field is required!" })}
           />
           {errors.firstName && (
             <span className="text-red-500">{errors.firstName.message}</span>
           )}
         </label>
-        <label className="text-gray-700 text-sm font-bold flex-1">
+        <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
           Last Name
           <input
             type="text"
-            className="border rounded w-full py-1 px-2 font-normal"
+            className="border rounded w-full p-2 font-normal placeholder:italic"
+            placeholder="Davies"
             {...register("lastName", { required: "This field is required!" })}
           />
           {errors.lastName && (
@@ -68,22 +70,23 @@ const Register = () => {
           )}
         </label>
       </div>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
         Email
         <input
           type="email"
-          className="border rounded w-full py-1 px-2 font-normal"
+          className="border rounded w-full p-2 font-normal placeholder:italic"
+          placeholder="example@gmail.com"
           {...register("email", { required: "This field is required!" })}
         />
         {errors.email && (
           <span className="text-red-500">{errors.email.message}</span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
         Password
         <input
           type="password"
-          className="border rounded w-full py-1 px-2 font-normal"
+          className="border rounded w-full p-2 font-normal"
           {...register("password", {
             required: "This field is required!",
             minLength: {
@@ -96,11 +99,11 @@ const Register = () => {
           <span className="text-red-500">{errors.password.message}</span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      <label className="text-gray-700 text-sm font-bold flex-1 flex flex-col gap-1">
         Confirm Password
         <input
           type="password"
-          className="border rounded w-full py-1 px-2 font-normal"
+          className="border rounded w-full p-2 font-normal"
           {...register("confirmPassword", {
             validate: (value) => {
               if (!value) {
@@ -118,7 +121,7 @@ const Register = () => {
       <span>
         <button
           type="submit"
-          className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
+          className="flex bg-blue-600 justify-self-end items-center rounded-full px-6 py-2 text-white font-bold hover:opacity-80 transition-all duration-200"
         >
           Create Account
         </button>

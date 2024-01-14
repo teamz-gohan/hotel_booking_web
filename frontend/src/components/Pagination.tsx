@@ -12,11 +12,15 @@ const Pagination = ({ page, pages, onPageChange }: Props) => {
 
   return (
     <div className="flex justify-center">
-      <ul className="flex border border-slate-300">
+      <ul className="flex items-center gap-4 justify-center">
         {pageNumbers.map((pageNumber, index) => (
           <li
             key={index}
-            className={`px-2 py-1 ${page === pageNumber ? "bg-gray-200" : ""}`}
+            className={`cursor:pointer ${
+              page === pageNumber
+                ? "text-white text-center px-2 py-1 h-[30px] w-[30px] rounded-full bg-blue-600"
+                : "hover:text-blue-600 transition-all"
+            }`}
           >
             <button
               onClick={() => onPageChange(pageNumber)}
